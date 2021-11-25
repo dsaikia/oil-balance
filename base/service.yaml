@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sf-mass-service
+spec:
+  type: NodePort
+  ports:
+    - port: 81 # will be used by other apps in the cluster to connect to this app
+      targetPort: 8080 # app inside the container listening on this port
+      nodePort: 31112 # external port that will be mapped on every cluster node. External traffic will hit this port.
+      protocol: TCP
+  selector: # label selector. This has to match the pod label that we deployed.
+    app: sf-mass

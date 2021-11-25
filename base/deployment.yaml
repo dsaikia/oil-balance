@@ -1,0 +1,24 @@
+# Simple deployment used to deploy and manage the app in nigelpoulton/getting-started-k8s:1.0
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sf-mass
+  labels:
+    app: sf-mass
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sf-mass
+  template:
+    metadata:
+      labels:
+        app: sf-mass
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+        - name: sf-mass
+          image: debojit/sf-mass:1.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080 # this should be the port that we have in spring application.properties
