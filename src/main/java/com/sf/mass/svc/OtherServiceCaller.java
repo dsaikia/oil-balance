@@ -31,7 +31,13 @@ public class OtherServiceCaller {
 
     public String callSfDemo(){
         String stringMono = webClient.get().uri(uriBuilder -> uriBuilder.build())
-                .accept(MediaType.APPLICATION_JSON).retrieve().bodyToMono(String.class).block();
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                /**.onStatus(HttpStatus::is4xxClientError, response -> {
+                    return Mono.error();
+                })*/
+                .bodyToMono(String.class)
+                .block();
         System.out.println(stringMono + " , OtherServiceCaller hash = " + System.identityHashCode(this));
         return stringMono;
     }
