@@ -31,6 +31,6 @@ public class MyService {
 
     @PostMapping
     public String post(){
-        return "Say Hello from Post!";
+        return "Say Hello from Post modified!";
     }
 }
