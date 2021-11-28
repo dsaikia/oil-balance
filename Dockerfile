@@ -1,4 +1,4 @@
 FROM openjdk:8
-ADD build/libs/sf-mass-0.0.1-SNAPSHOT.jar sf-mass-0.0.1-SNAPSHOT.jar
+ADD build/libs/sf-mass-0.0.1.jar sf-mass-0.0.1.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "sf-mass-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "sf-mass-0.0.1.jar"]
