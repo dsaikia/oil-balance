@@ -18,7 +18,7 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
         - name: sf-mass
-          image: debojit/sf-mass:1.0
+          image: debojit/first-app:1.0
           imagePullPolicy: Always
           ports:
             - containerPort: 8080 # this should be the port that we have in spring application.properties
