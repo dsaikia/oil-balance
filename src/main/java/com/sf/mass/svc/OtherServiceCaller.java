@@ -14,9 +14,12 @@ public class OtherServiceCaller {
     Logger logger = LogManager.getLogger(OtherServiceCaller.class);
 
     private String sfDemoServiceURI = "http://sf-demo.info:31111/rest/docker/hello";
+
+    //sfDemoServiceURI = "http://sf-demo.info:31111/rest/docker/hello";
     private WebClient webClient;
 
     public OtherServiceCaller() {
+        //sfDemoServiceURI = "http://localhost:8085/rest/docker/hello";
         webClient = WebClient.create(sfDemoServiceURI);
     }
 
@@ -29,9 +32,10 @@ public class OtherServiceCaller {
         logger.info("status Code = " + statusCode);
     }*/
 
-    public String callSfDemo(){
+    public String callSfDemo(String noProcessHeaderValue){
         String stringMono = webClient.get().uri(uriBuilder -> uriBuilder.build())
                 .accept(MediaType.APPLICATION_JSON)
+                .header("no-process", noProcessHeaderValue)
                 .retrieve()
                 /**.onStatus(HttpStatus::is4xxClientError, response -> {
                     return Mono.error();

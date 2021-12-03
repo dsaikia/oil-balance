@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sf-mass-service
+spec:
+  ports:
+  - nodePort: 31112
+    port: 81
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: sf-mass
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: sf-mass
+  name: sf-mass
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: sf-mass
+  template:
+    metadata:
+      labels:
+        app: sf-mass
+    spec:
+      containers:
+      - image: debojit/first-app:1.0
+        imagePullPolicy: Always
+        name: sf-mass
+        ports:
+        - containerPort: 8080
+      terminationGracePeriodSeconds: 5
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+  name: sf-mass-ingress
+spec:
+  rules:
+  - host: sf-mass.info
+    http:
+      paths:
+      - backend:
+          service:
+            name: sf-mass-service
+            port:
+              number: 81
+        path: /
+        pathType: Prefix

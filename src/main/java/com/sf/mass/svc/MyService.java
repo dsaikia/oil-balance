@@ -4,10 +4,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/call")
@@ -18,10 +18,16 @@ public class MyService {
     OtherServiceCaller otherServiceCaller;
 
     Logger logger = LogManager.getLogger(MyService.class);
+    
     @GetMapping
-    public String hello(){
+    public String hello(@RequestHeader HttpHeaders httpHeaders){
         logger.info("MyService hash = " + System.identityHashCode(this));
-        String fromSfDemo = otherServiceCaller.callSfDemo();
+        List<String> values = httpHeaders.get("no-process");
+        String headerValue = "";
+        if(values != null && !values.isEmpty()){
+            headerValue = values.get(0);
+        }
+        String fromSfDemo = otherServiceCaller.callSfDemo(headerValue);
         if(fromSfDemo != null){
             return fromSfDemo;
         }
