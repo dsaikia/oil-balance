@@ -18,7 +18,7 @@ public class MyService {
     OtherServiceCaller otherServiceCaller;
 
     Logger logger = LogManager.getLogger(MyService.class);
-    
+
     @GetMapping
     public String hello(@RequestHeader HttpHeaders httpHeaders){
         logger.info("MyService hash = " + System.identityHashCode(this));
@@ -37,6 +37,7 @@ public class MyService {
 
     @PostMapping
     public String post(){
+        logger.info("saying hello from Post method!!");
         return "Say Hello from Post modified!";
     }
 }
